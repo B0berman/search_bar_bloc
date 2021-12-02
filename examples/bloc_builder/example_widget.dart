@@ -12,7 +12,7 @@ class BlockBuilderExampleWidget extends StatelessWidget {
       create: (_) => SearchBarCubit(),
       child: Column(
         children: [
-          const SearchBar(hintText: "Search movie by name"),
+          const SearchBar(hintText: "Search something..."),
           BlocBuilder<SearchBarCubit, SearchBarState>(
               buildWhen: (previous, current) => previous.content != current.content,
               builder: (context, state) {

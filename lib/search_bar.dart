@@ -22,13 +22,16 @@ class SearchBar extends StatelessWidget {
   /// used to change the cancel icon. Default is [Icons.cancel]
   final Icon cancelIcon;
 
+  final double width;
+
   const SearchBar({
     Key? key,
     this.hintText = "Search...",
     this.leading = const Text("Search..."),
     this.keyboardType = TextInputType.name,
     this.searchIcon = const Icon(Icons.search),
-    this.cancelIcon = const Icon(Icons.cancel)
+    this.cancelIcon = const Icon(Icons.cancel),
+    this.width = 200.0,
   }) : super(key: key);
 
   @override
@@ -40,17 +43,18 @@ class SearchBar extends StatelessWidget {
         state.isSearching ? BlocBuilder<SearchBarCubit, SearchBarState>(
           buildWhen: (previous, current) => previous.content != current.content,
           builder: (context, state) {
-            return Container(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: TextField(
-                  key: const Key('searchBar_contentInput_textField'),
-                  onChanged: (content) => context.read<SearchBarCubit>().contentChanged(content),
-                  keyboardType: keyboardType,
-                  decoration: InputDecoration(
-                      hintText: hintText,
-                      border: InputBorder.none
-                  ),
-                )
+            return SizedBox(
+              width: width,
+              child: TextField(
+                key: const Key('searchBar_contentInput_textField'),
+                onChanged: (content) => context.read<SearchBarCubit>().contentChanged(content),
+                autofocus: state.isSearching,
+                keyboardType: keyboardType,
+                decoration: InputDecoration(
+                    hintText: hintText,
+                    border: InputBorder.none
+                ),
+              ),
             );
           },
         ) : leading,
