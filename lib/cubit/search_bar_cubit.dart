@@ -11,7 +11,7 @@ class SearchBarCubit extends Cubit<SearchBarState> {
 
   /// called when the [content] of the search bar changed
   void contentChanged(String content) {
-      emit(state.copyWith(content: content));
+    emit(state.copyWith(content: content));
   }
 
   void switchIsSearching() {

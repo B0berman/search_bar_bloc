@@ -40,30 +40,32 @@ class SearchBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        state.isSearching ? BlocBuilder<SearchBarCubit, SearchBarState>(
-          buildWhen: (previous, current) => previous.content != current.content,
-          builder: (context, state) {
-            return SizedBox(
-              width: width,
-              child: TextField(
-                key: const Key('searchBar_contentInput_textField'),
-                onChanged: (content) => context.read<SearchBarCubit>().contentChanged(content),
-                autofocus: state.isSearching,
-                keyboardType: keyboardType,
-                decoration: InputDecoration(
-                    hintText: hintText,
-                    border: InputBorder.none
-                ),
-              ),
-            );
-          },
-        ) : leading,
+        state.isSearching
+            ? BlocBuilder<SearchBarCubit, SearchBarState>(
+                buildWhen: (previous, current) =>
+                    previous.content != current.content,
+                builder: (context, state) {
+                  return SizedBox(
+                    width: width,
+                    child: TextField(
+                      key: const Key('searchBar_contentInput_textField'),
+                      onChanged: (content) => context
+                          .read<SearchBarCubit>()
+                          .contentChanged(content),
+                      autofocus: state.isSearching,
+                      keyboardType: keyboardType,
+                      decoration: InputDecoration(
+                          hintText: hintText, border: InputBorder.none),
+                    ),
+                  );
+                },
+              )
+            : leading,
         IconButton(
             onPressed: () {
               context.read<SearchBarCubit>().switchIsSearching();
             },
-            icon: state.isSearching ? cancelIcon : searchIcon
-        )
+            icon: state.isSearching ? cancelIcon : searchIcon)
       ],
     );
   }
